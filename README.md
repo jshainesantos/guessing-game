@@ -6,7 +6,7 @@ The Number Guessing Game is a simple web-based game where you have to guess a ra
 
 ## How to Play
 
-1. Visit the game [here](https://guessing-num-game-js.vercel.app/).
+1. Visit the game [here](https://guessing-num-game-js.netlify.app/).
 2. You'll see the game interface, which includes:
    - The game's choosing difficulty screen
    - A message indicating if you've won, lost, or are still playing
