@@ -1,4 +1,4 @@
-<h2>Welcome to the Number Guessing Game!</h2>h2>
+<h1>Welcome to the Number Guessing Game! 🙋‍♀️</h1>
 
 ## About the Game
 
