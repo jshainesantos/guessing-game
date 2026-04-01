@@ -1,105 +1,120 @@
-const difficulties = {
-  easy: { num: Math.floor(Math.random() * 5), guessCount: 20 }, //random number between 0 and 4, and 20
-  moderate: { num: Math.floor(Math.random() * 50), guessCount: 10 }, //random number between 0 and 49, and 10 guesses
-  hard: { num: Math.floor(Math.random() * 100), guessCount: 5 }, //random number between 0 and 99, and 5 guesses
+"use strict";
 
-  //pwede mo palitan yung makatotohanan wahahahaha
+const DIFFICULTIES = {
+  easy: { max: 5, guesses: 20 },
+  moderate: { max: 50, guesses: 10 },
+  hard: { max: 100, guesses: 5 },
 };
 
-//stores difficulty level
-let currentDifficulty = null;
-//stores guesses remaining
-let guessCount = 0;
+let current = { name: null, target: null, remaining: 0 };
 
-//dom elements
-const music = document.querySelector("#bg-music");
-const inputNum = document.querySelector("#inputNum");
-const guessBtn = document.querySelector("#guessBtn");
-const cardArea = document.querySelector("#cardArea");
-const guessesText = document.querySelector("#guesses");
+const getRandomInt = (max) => Math.floor(Math.random() * (max + 1));
 
-//set difficulty
-function setDifficulty(difficulty) {
-  currentDifficulty = difficulties[difficulty]; //pick difficulty
-  inputNum.disabled = false; //enable input field
-  guessBtn.disabled = false; //activate guess button
-  cardArea.innerHTML = ""; //clear input field
-  guessCount = currentDifficulty.guessCount; //update the guessCount to reflect the allowed number of tries for difficulty
-  guessesText.textContent = `Tries Remaining: ${guessCount}`;
+function showModal(id) {
+  const el = document.getElementById(id);
+  if (!el || typeof bootstrap === "undefined") return;
+  const modal = new bootstrap.Modal(el);
+  modal.show();
+}
+
+function updateGuessesText() {
+  const el = document.getElementById("guesses");
+  if (!el) return;
+  el.textContent = current.name ? `Tries Remaining: ${current.remaining}` : "";
+}
+
+function setDifficulty(level) {
+  const cfg = DIFFICULTIES[level];
+  if (!cfg) return;
+  current.name = level;
+  current.target = getRandomInt(cfg.max);
+  current.remaining = cfg.guesses;
+
+  const input = document.getElementById("inputNum");
+  const guessBtn = document.getElementById("guessBtn");
+  const cardArea = document.getElementById("cardArea");
+
+  if (input) {
+    input.disabled = false;
+    input.max = cfg.max;
+    input.placeholder = `Enter a number 0–${cfg.max}`;
+  }
+  if (guessBtn) guessBtn.disabled = false;
+  if (cardArea) cardArea.innerHTML = ""; // clear hints / buttons
+
+  updateGuessesText();
 }
 
 function checkGuess() {
-  const input = inputNum.value.trim();
-
-  if (input === "") {
-    //if input is empty
-    const emptyModal = new bootstrap.Modal(
-      document.getElementById("emptyModal")
-    );
-    emptyModal.show();
+  const input = document.getElementById("inputNum");
+  if (!input) return;
+  const raw = input.value.trim();
+  if (raw === "") {
+    showModal("emptyModal");
+    return;
+  }
+  const value = Number(raw);
+  if (!Number.isFinite(value) || !Number.isInteger(value)) {
+    showModal("letterModal");
+    input.value = "";
+    return;
+  }
+  const max = DIFFICULTIES[current.name]?.max ?? 100;
+  if (value < 0 || value > max) {
+    showModal("chooseModal");
+    input.value = "";
     return;
   }
 
-  const inputValue = parseInt(input);
+  current.remaining -= 1;
+  const cardArea = document.getElementById("cardArea");
 
-  if (isNaN(inputValue)) {
-    //if not a number
-    const letterModal = new bootstrap.Modal(
-      document.getElementById("letterModal")
-    );
-    letterModal.show();
-    inputNum.value = "";
-    return;
+  if (value === current.target) {
+    showModal("winnerModal");
+  } else {
+    const hint = value > current.target ? "🔻 Try Lower." : "🔺 Try Higher.";
+    if (cardArea) cardArea.innerHTML = `<p class="text-center fw-bold mt-3">${hint}</p><p class="text-center h2">${value}</p>`;
   }
 
-  if (inputValue < 0 || inputValue > 100) {
-    // out of range
-    const chooseModal = new bootstrap.Modal(
-      document.getElementById("chooseModal")
-    );
-    chooseModal.show();
-    inputNum.value = "";
-    return;
-  }
-  guessCount--;
+  input.value = "";
+  updateGuessesText();
 
-  if (inputValue === currentDifficulty.num) {
-    //if correct
-    const winnerModal = new bootstrap.Modal(
-      document.getElementById("winnerModal")
-    );
-    winnerModal.show();
-  } else if (inputValue > currentDifficulty.num) {
-    cardArea.innerHTML = `<div><p class="text-center fw-bold mt-4" style="font-size: 20px;">🔻Try Lower.</p><p class="text-center" style="font-size: 2rem;"> Your input:${inputValue}</p></div>`;
-  } else if (inputValue < currentDifficulty.num) {
-    cardArea.innerHTML = `<div><p class="text-center fw-bold mt-4" style="font-size: 20px;">🔺Try Higher.</p><p class="text-center" style="font-size: 2rem;">Your input: ${inputValue}</p></div>`;
-  }
-
-  inputNum.value = "";
-  guessesText.textContent = `Tries Remaining: ${guessCount}`;
-
-  if (guessCount === 0) {
-    //run out of guesses
-    const loseModal = new bootstrap.Modal(document.getElementById("loseModal"));
-    loseModal.show();
+  if (current.remaining <= 0 && value !== current.target) {
+    showModal("loseModal");
   }
 }
 
-//reset game
 function resetGame() {
-  window.location.href = "game-page-3.html";
+  window.location.reload();
 }
 
-//event listeners
-document
-  .querySelector("#easyBtn")
-  .addEventListener("click", () => setDifficulty("easy"));
-document
-  .querySelector("#moderateBtn")
-  .addEventListener("click", () => setDifficulty("moderate"));
-document
-  .querySelector("#hardBtn")
-  .addEventListener("click", () => setDifficulty("hard"));
-guessBtn.addEventListener("click", checkGuess);
-document.querySelector("#loseRestartBtn").addEventListener("click", resetGame);
-document.querySelector("#restartBtn").addEventListener("click", resetGame);
+document.addEventListener("DOMContentLoaded", () => {
+  const cardArea = document.getElementById("cardArea");
+  if (cardArea && !document.getElementById("easyBtn")) {
+    cardArea.innerHTML = `
+      <button class="btn btn-danger rounded-pill px-4" id="easyBtn">Easy</button>
+      <button class="btn btn-danger rounded-pill px-4" id="moderateBtn">Moderate</button>
+      <button class="btn btn-danger rounded-pill px-4" id="hardBtn">Hard</button>
+    `;
+  }
+
+  const attach = (id, fn) => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener("click", fn);
+  };
+
+  attach("easyBtn", () => setDifficulty("easy"));
+  attach("moderateBtn", () => setDifficulty("moderate"));
+  attach("hardBtn", () => setDifficulty("hard"));
+
+  const guessBtn = document.getElementById("guessBtn");
+  if (guessBtn) guessBtn.addEventListener("click", checkGuess);
+
+  const input = document.getElementById("inputNum");
+  if (input) input.addEventListener("keydown", (e) => { if (e.key === "Enter") checkGuess(); });
+
+  attach("restartBtn", resetGame);
+  attach("loseRestartBtn", resetGame);
+
+  updateGuessesText();
+});
