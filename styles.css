@@ -1,31 +1,30 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=AR+One+Sans&family=Dela+Gothic+One&family=Press+Start+2P&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Press+Start+2P&display=swap');
 
-.landing h1,
-a,
-button {
-  font-family: "Press Start 2P", cursive;
+:root{
+  --bg: #000;
+  --text: #fff;
+  --primary: #dc3545;
 }
 
-.difficultyContainer h3,
-a {
-  font-family: "Press Start 2P", cursive;
+body{
+  margin:0;
+  font-family: 'Poppins', sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
 }
 
-.continueBtn {
-  font-family: "Press Start 2P", cursive;
-}
+.press-start{font-family:'Press Start 2P', cursive;}
 
-.welcomeMsg {
-  font-family: "AR One Sans", sans-serif;
-  font-weight: bold;
-}
+.welcomeMsg{font-weight:600}
 
-.modals {
-  font-family: "Press Start 2P", cursive;
-}
+.img-section img{max-height:260px}
 
-.containerGuess {
-  font-family: "Press Start 2P", cursive;
-}
+.card.bg-dark{background:#0f0f0f}
+
+.btn{font-family:inherit}
+
+.input-group .form-control{min-width:0}
+
+/* make sure modal text is readable on dark background */
+.modal-content{background:#111;color:var(--text)}
