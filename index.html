@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -11,64 +11,108 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
   </head>
 
   <body class="bg-black press-start text-light">
-    <main class="container-sm pt-5">
-      <header class="text-center pt-5">
-        <h1 class="fw-bold">Welcome to the Ultimate Number Guessing Game!</h1>
-      </header>
-
-      <section class="text-center pt-5">
-        <a class="btn btn-danger rounded-pill px-4 me-3" href="game-page-2.html">Play Now</a>
-        <button
-          type="button"
-          class="btn btn-outline-light rounded-pill px-4 ms-2"
-          data-bs-toggle="modal"
-          data-bs-target="#howToModal"
-        >
-          How to play
-        </button>
-      </section>
-
-      <div
-        class="modal fade"
-        id="howToModal"
-        tabindex="-1"
-        aria-labelledby="howToModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="howToModalLabel">How to play</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <main>
+      <div class="app-shell">
+        <div class="card mx-auto shadow">
+          <div class="card-body text-center">
+            <div class="hero mb-3">
+              <div class="logo">
+                <i
+                  class="bi bi-joystick"
+                  style="font-size: 1.35rem; color: #ffd8e0"
+                ></i>
+              </div>
+              <div>
+                <div class="title">Ultimate Number Guessing</div>
+                <div class="subtitle">
+                  A small, addictive guessing challenge
+                </div>
+              </div>
             </div>
-            <div class="modal-body">
-              <ol>
-                <li>Choose a difficulty on the next screen.</li>
-                <li>Enter your guess and submit.</li>
-                <li>The game will tell you if it's higher or lower.</li>
-                <li>Keep guessing until you win or run out of tries.</li>
-              </ol>
+
+            <div class="d-flex justify-content-center controls">
+              <a
+                class="btn btn-primary-custom rounded-pill px-4"
+                href="game-page-2.html"
+                >Play Now</a
+              >
+              <button
+                type="button"
+                class="btn btn-ghost rounded-pill px-4"
+                data-bs-toggle="modal"
+                data-bs-target="#howToModal"
+              >
+                How to play
+              </button>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Got it</button>
+
+            <div class="mt-4">Made with care — small JS game</div>
+
+            <div class="img-section d-flex justify-content-center mt-4">
+              <img
+                src="https://i.pinimg.com/originals/a4/40/49/a4404915bb27f6e1e2814babedcc3d9b.gif"
+                class="img-fluid"
+                alt="animated"
+              />
             </div>
           </div>
         </div>
       </div>
-
-      <div class="img-section d-flex justify-content-center pt-5">
-        <img
-          src="https://i.pinimg.com/originals/a4/40/49/a4404915bb27f6e1e2814babedcc3d9b.gif"
-          class="img-fluid"
-          alt="animated"
-        />
-      </div>
     </main>
 
-    <footer class="text-center mt-4 text-light">Developed by <b>Byron Oscar Dones</b> and <b>Shaine Santos</b></footer>
+    <div
+      class="modal fade"
+      id="howToModal"
+      tabindex="-1"
+      aria-labelledby="howToModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header align-items-center">
+            <h5 class="modal-title" id="howToModalLabel">
+              <i class="bi bi-info-circle-fill me-2"></i>How to play
+            </h5>
+            <button
+              type="button"
+              class="btn btn-ghost"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            >
+              <i class="bi bi-x-lg"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <ol>
+              <li>Choose a difficulty on the next screen.</li>
+              <li>Enter your guess and submit or press Enter.</li>
+              <li>The game hints if the number is higher or lower.</li>
+              <li>Win by finding the secret number before tries run out.</li>
+            </ol>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary-custom"
+              data-bs-dismiss="modal"
+            >
+              Got it
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="text-center mt-4 text-light">
+      Developed by <b>Byron Oscar Dones</b> and <b>Shaine Santos</b>
+    </footer>
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
