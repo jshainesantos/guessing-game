@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -11,24 +11,45 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
   </head>
 
-  <body class="bg-black press-start text-light">
-    <main class="container mt-5">
-      <div class="row">
-        <div class="col-md-8 mx-auto">
-          <div class="card shadow bg-dark text-light">
-            <div class="card-body">
-              <h3>Hello, Player!</h3>
-              <hr />
-              <p class="welcomeMsg">Welcome to the Ultimate Number Guessing Challenge! Choose Continue to pick a difficulty and begin.</p>
-              <div class="text-end mt-4">
-                <a href="game-page-3.html" class="btn btn-danger rounded-pill px-4" id="continueBtn">Continue</a>
+  <body class="press-start">
+    <main>
+      <div class="app-shell">
+        <div class="card mx-auto shadow">
+          <div class="card-body">
+            <div class="hero mb-2">
+              <div class="logo">
+                <i class="bi bi-gear-fill" style="color: #ffd8e0"></i>
+              </div>
+              <div>
+                <div class="title">Hello, Player!</div>
+                <div class="subtitle">
+                  Pick a difficulty to start the challenge
+                </div>
               </div>
             </div>
+            <p class="welcomeMsg" style="color: var(--muted)">
+              Welcome to the Ultimate Number Guessing Challenge! Choose Continue
+              to pick a difficulty and begin.
+            </p>
+            <div class="d-flex justify-content-end mt-3">
+              <a
+                href="game-page-3.html"
+                class="btn btn-primary-custom rounded-pill px-4"
+                id="continueBtn"
+                >Continue</a
+              >
+            </div>
           </div>
-          <footer class="text-center mt-4 text-light">Developed by <b>Byron Oscar Dones</b> and <b>Shaine Santos</b></footer>
         </div>
+        <footer>
+          Developed by <b>Byron Oscar Dones</b> and <b>Shaine Santos</b>
+        </footer>
       </div>
     </main>
 
